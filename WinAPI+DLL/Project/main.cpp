@@ -29,11 +29,9 @@ int main(int argc, char* argv[])
 	Tick* tick;
 
 	StartFeed();
-	while (true) //ESC to quit
+	while (GetMessage(&msg, 0, 0, 0)) //ESC to quit
 	{
-		GetMessage(&msg, 0, 0, 0);
 		tick = reinterpret_cast<Tick*>(msg.lParam);
-
 		if (mktime(&tick->tickTime) - mktime(&openTickTIme) >= timeInterval && !isOpenTick)
 		{
 			isOpenTick = true;
