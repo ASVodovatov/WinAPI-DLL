@@ -1,7 +1,6 @@
 #include "windows.h"
 #include <conio.h>
 #include <iostream>
-#include <string>
 #include <iomanip>
 #include "TickerPlant.h" // contains struct Tick
 const char KEY_ESC = 27;
