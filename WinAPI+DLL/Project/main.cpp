@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 	const time_t timeInterval = atoi(argv[1]);
 
 	bool isOpenTick = true;
-	tm openTickTIme;
+	time_t openTickTIme = 0;
 	Bar bar;
 	MSG msg;
 	Tick* tick;
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 	while (GetMessage(&msg, 0, 0, 0)) //ESC to quit
 	{
 		tick = reinterpret_cast<Tick*>(msg.lParam);
-		if (mktime(&tick->tickTime) - mktime(&openTickTIme) >= timeInterval && !isOpenTick)
+		if (mktime(&tick->tickTime) - openTickTIme >= timeInterval && !isOpenTick)
 		{
 			isOpenTick = true;
 			std::cout << "Bar closed [" << bar.open << "; " << bar.high << "; "
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 		if (isOpenTick)
 		{
 			isOpenTick = false;
-			openTickTIme = tick->tickTime;
+			openTickTIme = mktime(&tick->tickTime);
 			bar.open = tick->tickPrice;
 		}
 
